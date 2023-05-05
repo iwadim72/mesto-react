@@ -24,6 +24,9 @@ function Main(props) {
             .then((res) => {
                 setCards(res);
             })
+            .catch((error) => {
+                console.log(error)
+            })
     }, [])
 
     return (
@@ -45,7 +48,7 @@ function Main(props) {
             <section className="places">
                 <ul class="places__elements">
                     {cards.map((card) => {
-                        return < Card card={card} onCardClick={props.onCardClick} />
+                        return < Card card={card} onCardClick={props.onCardClick} key={card._id} />
                     })}
                 </ul>
             </section>

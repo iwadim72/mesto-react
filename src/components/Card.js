@@ -7,7 +7,7 @@ function Card(props) {
     }
 
     return (
-        <li class="places__element">
+        <li class="places__element" key={props.key}>
             <div class="places__photo" style={{ backgroundImage: `url(${props.card.link})` }} onClick={handleClick}></div>
             <div class="places__name-container">
                 <h3 class="places__name">{props.card.name}</h3>

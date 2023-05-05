@@ -40,11 +40,23 @@ function App() {
         <>
             <div className="page">
                 < Header />
-                < Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} />
+
+                < Main
+                    onEditProfile={handleEditProfileClick}
+                    onAddPlace={handleAddPlaceClick}
+                    onEditAvatar={handleEditAvatarClick}
+                    onCardClick={handleCardClick} />
+
                 < Footer />
             </div>
 
-            < PopupWithForm name="profile" buttonText="Сохранить" title="Редактировать профиль" isOpened={isEditProfilePopupOpen} onClose={closeAllPopups} children={<>
+            < PopupWithForm
+                name="profile"
+                buttonText="Сохранить"
+                title="Редактировать профиль"
+                isOpened={isEditProfilePopupOpen}
+                onClose={closeAllPopups}>
+
                 <label class="popup__field">
                     <input className="popup__text-input popup__text-input_content_name" type="text" placeholder="Имя"
                         id="name-input" name="name" minlength="2" maxlength="40" required />
@@ -55,20 +67,35 @@ function App() {
                         id="job-input" name="job" minlength="2" maxlength="200" required />
                     <span className="popup__erorr job-input-error"></span>
                 </label>
-            </>} />
 
-            < PopupWithForm name="avatar" buttonText="Сохранить" title="Обновить аватар" isOpened={isEditAvatarPopupOpen} onClose={closeAllPopups} children={<>
+            </PopupWithForm>
+
+
+            < PopupWithForm
+                name="avatar"
+                buttonText="Сохранить"
+                title="Обновить аватар"
+                isOpened={isEditAvatarPopupOpen}
+                onClose={closeAllPopups}>
+
                 <label className="popup__field">
                     <input className="popup__text-input popup__text-input_content_link" type="url" value=""
                         placeholder="Ссылка на картинку" id="avatar-link" name="avatar" required />
                     <span className="popup__erorr avatar-link-error"></span>
                 </label>
-            </>} />
+
+            </PopupWithForm>
 
 
             < PopupWithForm name="confirm" buttonText="Да" title="Вы уверены?" />
 
-            < PopupWithForm name="add-place" buttonText="Создать" title="Новое место" isOpened={isAddPlacePopupOpen} onClose={closeAllPopups} children={<>
+            < PopupWithForm
+                name="add-place"
+                buttonText="Создать"
+                title="Новое место"
+                isOpened={isAddPlacePopupOpen}
+                onClose={closeAllPopups}>
+
                 <label className="popup__field">
                     <input className="popup__text-input popup__text-input_content_place-name" type="text"
                         placeholder="Название" id="place-name" name='name' minlength="2" maxlength="30" required />
@@ -79,7 +106,8 @@ function App() {
                         placeholder="Ссылка на картинку" id="place-url" name='link' required />
                     <span className="popup__erorr place-url-error"></span>
                 </label>
-            </>} />
+
+            </PopupWithForm>
 
             < ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </>
