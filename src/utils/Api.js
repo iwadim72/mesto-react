@@ -22,13 +22,13 @@ class Api {
             })
     }
 
-    setProfileInfo(info) {
+    setUserInfo(info) {
         return fetch(`${this.baseUrl}/users/me`, {
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify({
                 name: info.name,
-                about: info.job
+                about: info.about
             })
         })
 
@@ -90,7 +90,7 @@ class Api {
             })
     }
 
-    addLike(cardId) {
+    _addLike(cardId) {
         return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
             method: 'PUT',
             headers: this.headers,
@@ -101,7 +101,7 @@ class Api {
             })
     }
 
-    removeLike(cardId) {
+    _removeLike(cardId) {
         return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
             method: 'DELETE',
             headers: this.headers,
@@ -110,6 +110,13 @@ class Api {
             .then(res => {
                 return this._getResponseData(res);
             })
+    }
+
+    changeLikeCardStatus(cardId, isLiked) {
+        if (isLiked) {
+            return this._removeLike(cardId);
+        } else { return this._addLike(cardId); }
+
     }
 }
 
