@@ -5,7 +5,7 @@ function Card(props) {
     const currentUser = React.useContext(CurrentUserContext);
     const isOwn = props.card.owner._id === currentUser._id;
     const isLiked = props.card.likes.some(i => i._id === currentUser._id)
-    const cardLikeButtonclassNameName = (
+    const cardLikeButtonclassName = (
         `places__like ${isLiked && 'places__like_active'}`
     )
 
@@ -22,12 +22,12 @@ function Card(props) {
     }
 
     return (
-        <li className="places__element" key={props.card._id}>
+        <li className="places__element">
             <div className="places__photo" style={{ backgroundImage: `url(${props.card.link})` }} onClick={handleClick}></div>
             <div className="places__name-container">
                 <h3 className="places__name">{props.card.name}</h3>
                 <div className="places__like-container">
-                    <button className={cardLikeButtonclassNameName} onClick={handleLike} type="button"></button>
+                    <button className={cardLikeButtonclassName} onClick={handleLike} type="button"></button>
                     <p className="places__like-counter">{props.card.likes.length}</p>
                 </div>
                 {isOwn && <button className="places__delete" type="button" onClick={handleCardDelete}></button>}

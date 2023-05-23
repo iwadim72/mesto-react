@@ -1,8 +1,10 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
+import { IsLoadingContext } from "../contexts/IsLoadingContext";
 
 function EditAvatarPopup(props) {
     const avatarRef = React.useRef();
+    const isLoading = React.useContext(IsLoadingContext);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -14,7 +16,7 @@ function EditAvatarPopup(props) {
     return (
         < PopupWithForm
             name="avatar"
-            buttonText="Сохранить"
+            buttonText={isLoading.isLoading ? 'Сохранение...' : 'Сохранить'}
             title="Обновить аватар"
             isOpened={props.isOpened}
             onClose={props.onClose}

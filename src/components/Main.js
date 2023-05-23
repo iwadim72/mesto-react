@@ -23,7 +23,7 @@ function Main(props) {
             <section className="places">
                 <ul className="places__elements">
                     {props.cards.map((card) => {
-                        return < Card card={card} onCardClick={props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete} />
+                        return < Card card={card} onCardClick={props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete} key={card._id} />
                     })}
                 </ul>
             </section>

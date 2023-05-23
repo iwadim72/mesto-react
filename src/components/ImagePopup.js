@@ -1,9 +1,10 @@
 import React from "react";
+import usePopupClose from "../hooks/usePopupClose";
 
 function ImagePopup(props) {
 
     const className = `popup-photo popup ${props.card.name ? 'popup_opened' : ''}`;
-
+    usePopupClose(props.card.link, props.onClose)
 
     return (
         <div className={className}>

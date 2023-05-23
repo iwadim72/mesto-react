@@ -9,6 +9,7 @@ import EditProfilePopup from './EditProfilePopup';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import { IsLoadingContext } from '../contexts/IsLoadingContext';
 
 function App() {
 
@@ -18,8 +19,7 @@ function App() {
     const [selectedCard, setSelectedCard] = React.useState({});
     const [currentUser, setCurrentUser] = React.useState({});
     const [cards, setCards] = React.useState([]);
-
-
+    const [isLoading, setIsLoading] = React.useState(false);
 
     React.useEffect(() => {
         api.getProfileInfo()
@@ -55,37 +55,36 @@ function App() {
         setSelectedCard(card);
     }
 
+    function handleSubmit(request) {
+        setIsLoading(true);
+        request()
+            .then(closeAllPopups)
+            .catch(console.error)
+            .finally(() => setIsLoading(false));
+    }
+
     function handleUpdateUser(info) {
-        api.setUserInfo(info)
-            .then((res) => {
-                setCurrentUser(res);
-                closeAllPopups();
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+        function makeRequest() {
+            return api.setUserInfo(info).then(setCurrentUser);
+        }
+
+        handleSubmit(makeRequest);
     }
 
     function handleUpdateAvatar(info) {
-        api.changeAvatar(info)
-            .then((res) => {
-                setCurrentUser(res);
-                closeAllPopups();
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+        function makeRequest() {
+            return api.changeAvatar(info).then(setCurrentUser);
+        }
+
+        handleSubmit(makeRequest);
     }
 
     function handleAddNewCard(newCard) {
-        api.addNewCard(newCard)
-            .then((res) => {
-                setCards([res, ...cards]);
-                closeAllPopups();
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        function makeRequest() {
+            return api.addNewCard(newCard).then((res) => { setCards([res, ...cards]) });
+        }
+
+        handleSubmit(makeRequest);
     }
 
     function handleCardLike(card) {
@@ -119,7 +118,7 @@ function App() {
     }, [])
 
     return (
-        <>
+        <IsLoadingContext.Provider value={{ isLoading, closeAllPopups }}>
             <CurrentUserContext.Provider value={currentUser}>
                 <div className="page">
                     < Header />
@@ -157,7 +156,8 @@ function App() {
 
                 < ImagePopup card={selectedCard} onClose={closeAllPopups} />
             </CurrentUserContext.Provider>
-        </>
+        </IsLoadingContext.Provider>
+
     )
 }
 
